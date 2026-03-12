@@ -1,0 +1,17 @@
+h1{
+    color: rgb(19, 80, 194);
+    font-weight:bold;
+}
+*{
+    font-family:'Courier New', Courier, monospace ;
+}
+
+.yup {
+    color: black;
+    background-color:aqua;
+}
+
+button{ 
+    color: rgb(248, 246, 246);
+    background-color: black;
+}
