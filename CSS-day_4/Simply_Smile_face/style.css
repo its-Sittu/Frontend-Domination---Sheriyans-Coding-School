@@ -1,0 +1,49 @@
+.face{
+    width: 400px;
+    height: 400px;
+    background-color: chocolate;
+    border-radius: 50%;
+}
+
+.face2{
+    width: 75px;
+    height: 75px;
+    background-color: rgb(0, 0, 0);
+    position: relative;
+    top: 100px;
+    left: 90px;
+    border-radius: 50%;
+    border-width:2px;
+    border-style: dotted;
+    border-color: azure;
+}
+
+.face3{
+    width: 75px;
+    height: 75px;
+    background-color: rgb(15, 1, 1);
+    position: relative;
+    top: 25px;
+    left: 250px;
+    border-radius: 50%;
+    border-width:2px;
+    border-style: dotted;
+    border-color: azure;
+    
+}
+
+.smile{
+    height: 80px;
+    width:200px;
+    background-color: rgb(92, 248, 113);
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
+    position: absolute;
+    top: 200px;
+    left: 105px;
+    margin-top:45px;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+

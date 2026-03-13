@@ -1,0 +1,134 @@
+*{
+    box-sizing: border-box ;
+}
+
+
+
+
+
+.container{
+    height: 400px;
+    border: 2px rgb(204, 124, 4) solid;
+
+    /* contains all box in one in main axis  */
+    display:flex;
+    /* flex-direction: column; */
+
+    flex-flow:wrap column;
+   flex-wrap: wrap;
+   /* mtlb ki hamre box jo hai ek size main hai
+   jaise hmne page ki size adjust ki woh bhi ho 
+   gaye  */
+ 
+
+   /* flex-wrap: wrap-reverse; */
+   /* mtlb ki hamre box jo hai ek size main hai
+   jaise hmne page ki size adjust ki woh bhi ho 
+   gaye  reverse tarikke se hoga indexing*/
+
+
+
+    /* gap: 10px; */
+    
+    /*  margin use krne se gap to ho jati
+    hai pr woh main box se alg se bhi hota hai 
+    so usss se alg na ho hmm use krte haii 
+    gap actually sbke bich main*/
+
+
+    /* row-gap: 10px; */
+    /* agr tum sirf row main gap 
+    chahte ho too wha bhi ho jayega  */
+
+
+    /* Flex-flow
+    
+    wrap and define direction of wrap with one line */
+}
+.box{
+    width: 100px;
+    border: 2px green solid;
+    /* margin: 10px ; */
+
+    flex-basis: 25%;
+  
+}
+
+
+
+/* justify content
+  
+
+Main axis ke around apne children justify kr skte hoo
+*/
+
+.container{
+    justify-content: space-around; 
+
+    /* space - between 
+    no further space from start and end*/
+
+    /* justify-content: flex-start/end; 
+     effect show only one main axis */
+
+     /* justify-content: center; 
+      in centre */
+}
+
+/* note if you want to align the box in centre 
+with actual height use -
+
+
+justify content: centre
+align -items : centre */
+
+
+.container{
+    justify-content: center;
+    align-items:center;
+    /* align-content: flex-start; */
+    /* align-content: end;
+    align-content:space-between; */
+}
+
+
+/* Note
+justify content in main axis
+align itema used in cross axis or actual data comes */
+
+
+
+
+
+
+
+
+
+/* FLEX CHILD ITEMS */
+/* FOR AN SPECIFIC BOXES */
+
+
+#box-1{
+
+    order: 1;
+    /* order batata hai ki konsa element
+    kha jayega ya kitna bda hai  */
+    flex-grow: 1;
+    flex-shrink:2;
+}
+
+#box-3{
+    /* 3 element bda hai 1 se  */
+    order: 3;
+    flex-grow:2;
+}
+
+#box-4{
+    flex-shrink:3;
+    /* jab warp nhi hoga tabh */
+}
+
+
+/* flex 
+order , grow , shrink , basis
+ all are define also in one tag*/

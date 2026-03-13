@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/action">
+    <br>
+    <input type="text">
+    <br>
+    <input type="password">
+    <br>
+    <input type="time">
+    <br>
+    <input type="color">
+<br>
+
+    <!--Place Holder Attribute -->
+    <hr>
+<input type="text" placeholder="Enter Name">
+<br>
+<input type="password" placeholder="Enter the password">
+<hr>
+
+
+<!--Label Conceept -->
+<!-- Label helps to form connection -->
+<label>
+    Username 
+    <input type="Text" placeholder="Enter Name">
+</label>
+<hr>
+
+
+<!--label Classical Appproach -->
+<!-- Label helps to form connection -->
+<label for="Username">Username</label>
+<input type="text" placeholder="Enter Username" id="Username">
+<br>
+<label for="password">Password</label>
+<input type="password" placeholder="Enter password" id="password">
+
+
+<hr>
+<!--Button Element-->
+<br>
+<button>Submit </button>
+<br>
+<!--Button type Attribute -->
+<button type="button">Click here to Apply</button>
+<br>
+<button type="reset">Reset</button>
+<br>
+<button type="Submit">Submit</button>
+<hr>
+
+
+<!--More option to make button option with the help of Input Elements -->
+<input type="submit">
+<br>
+<input type="submit" value="Click Me">
+<hr>
+
+<!--Name Attribute-->
+<!--print name on Server -->
+<label for="user">Username</label>
+<input type="text" placeholder="Enter text here" id="user" name="user">
+<button type="Submit">Submit</button>
+<!--/action?user=-->
+<hr>
+</form>
+
+<!-- Youtube Search -->
+ <form action="https://www.youtube.com/results?">
+<input type="text" placeholder="Search in youtube" name="search_query">
+<input type="submit" value="Search">
+<button type="submit">Click here</button>
+ </form>
+ <!--Note never apply form attribute under the form attribute again chrome will confused -->
+</body>
+
+</html>

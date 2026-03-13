@@ -1,0 +1,86 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0%;
+}
+
+.contain{
+    height: 600px;
+    border: 2px solid red;
+    display: grid;
+    row-gap: 20px;
+    column-gap: 5px;
+    grid-template-columns: 200px 200px 200px ;
+    /* grid-template-rows: 100px 200px 300px ; */
+
+
+    /* grid-template-rows: 1fr 2fr 3fr; */
+
+    /* repeat(4 , 1 fr);
+    4 box ke liye 1 command sbka gap defind kr dega  */
+
+    /*grid-auto-rows:150px */
+
+    /* that makes the height distance between the boxes */
+    /* grid-auto-rows:100px */
+    
+}
+
+
+.contain{
+    /* justify-content: center; */
+    /* justify-content:space-around; */
+    /*  */
+}
+
+.box{
+    border: 2px chartreuse solid;
+    padding: 12px;
+}
+
+.contain{
+    /* align-items: center;
+    align-items: baseline;
+    align-items:end; */
+    /* align-items:center; */
+
+    /* show the actual box height and width */
+}
+
+#box-1{
+    /* background-color: darkmagenta;
+    border: 2px black dotted;
+    justify-self:end; */
+    /* only work in the main axis  */
+
+    /* align-self:end; */
+}
+
+#box-1{
+    background-color: deeppink;
+     grid-column-start:1;
+    grid-column-end:4;
+}
+
+
+
+#box-2{
+/* make in one row by mixing two or more boxes */
+    /* background-color: fuchsia;
+    grid-row-start:2;
+    grid-row-end:4; */
+}
+
+
+
+
+#box-1{
+   background-color: goldenrod;
+   /* grid area 
+   helps to mix the concept of both row and columns
+   area in one in shortcut */
+   grid-area: 1/1/3/3;
+}
+
+
+/* GRID TEMPLATE AREA */

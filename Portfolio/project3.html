@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberBear: An AI-Powered Cybersecurity Chatbot</title>
+    <!-- Use the Inter font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+        }
+
+        .chat-container {
+            height: calc(100vh - 12rem);
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #444 #161b22;
+        }
+
+        .chat-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-container::-webkit-scrollbar-track {
+            background: #161b22;
+        }
+
+        .chat-container::-webkit-scrollbar-thumb {
+            background-color: #444;
+            border-radius: 4px;
+            border: 2px solid #161b22;
+        }
+
+        .chat-bubble {
+            max-width: 80%;
+            padding: 1rem;
+            border-radius: 1.25rem;
+            margin-bottom: 1rem;
+            animation: fadeIn 0.5s ease-in-out;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        .user-bubble {
+            background-color: #21262d;
+            border-bottom-right-radius: 0;
+            align-self: flex-end;
+            text-align: right;
+            border: 1px solid #30363d;
+        }
+
+        .ai-bubble {
+            background-color: #0b2241;
+            border-bottom-left-radius: 0;
+            align-self: flex-start;
+            border: 1px solid #1a5391;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .loading-dots {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .loading-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #8b949e;
+            border-radius: 50%;
+            margin: 0 4px;
+            animation: bounce 0.6s infinite ease-in-out;
+        }
+
+        .loading-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .loading-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-header {
+            border-bottom: 1px solid #30363d;
+        }
+    </style>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="bg-gray-900 text-gray-200 min-h-screen p-4 flex items-center justify-center">
+
+    <div class="relative w-full max-w-4xl p-6 bg-gray-900 rounded-2xl shadow-2xl flex flex-col lg:flex-row gap-6">
+
+        <!-- Sidebar / Features Section -->
+        <div class="lg:w-1/3 w-full flex flex-col gap-4 p-4 card">
+            <div class="flex items-center gap-4 text-white section-header pb-4 mb-4">
+                <span class="w-10 h-10 flex items-center justify-center rounded-full bg-blue-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-shield-check">
+                        <path
+                            d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.58-1.28 6.43-3.62a1 1 0 0 1 1.54 0C14.42 3.72 16 5 19 5a1 1 0 0 1 1 1z" />
+                        <path d="m9 12 2 2 4-4" />
+                    </svg>
+                </span>
+                <h2 class="text-xl font-semibold">CyberBear Features</h2>
+            </div>
+
+            <!-- Proactive Threat Alerts -->
+            <div id="threat-alerts-section" class="flex flex-col gap-2 p-4 card">
+                <div class="flex items-center gap-2 text-blue-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-megaphone">
+                        <path d="m3 11 18-2v6l-18 2v-6z" />
+                        <path d="M12 2v2" />
+                        <path d="M12 22v-2" />
+                        <path d="M17 5v2" />
+                        <path d="M17 19v-2" />
+                    </svg>
+                    <h3 class="font-medium text-lg">Proactive Threat Alerts</h3>
+                </div>
+                <div id="threat-alerts" class="text-sm overflow-y-auto h-24">
+                    <!-- Alerts will be injected here by JS -->
+                </div>
+            </div>
+
+            <!-- Educational Content Library -->
+            <div class="flex flex-col gap-2 p-4 card">
+                <div class="flex items-center gap-2 text-green-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-book-open">
+                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                    </svg>
+                    <h3 class="font-medium text-lg">Cybersecurity Library</h3>
+                </div>
+                <div class="flex flex-col gap-2 text-sm">
+                    <p class="font-semibold text-gray-400">Learn about key topics:</p>
+                    <button onclick="showEducationalContent('phishing')"
+                        class="py-2 px-4 rounded-md text-left transition-colors duration-200 hover:bg-gray-800">
+                        <span class="font-medium">Phishing</span>: Spotting deceptive emails.
+                    </button>
+                    <button onclick="showEducationalContent('malware')"
+                        class="py-2 px-4 rounded-md text-left transition-colors duration-200 hover:bg-gray-800">
+                        <span class="font-medium">Malware</span>: Types and prevention.
+                    </button>
+                    <button onclick="showEducationalContent('passwords')"
+                        class="py-2 px-4 rounded-md text-left transition-colors duration-200 hover:bg-gray-800">
+                        <span class="font-medium">Password Hygiene</span>: Creating strong passwords.
+                    </button>
+                </div>
+            </div>
+
+            <!-- Personalized Security Score -->
+            <div class="flex flex-col gap-2 p-4 card">
+                <div class="flex items-center gap-2 text-orange-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-gauge">
+                        <path d="m12 14.5 4-2.5" />
+                        <path d="M21.2 11.2a8.6 8.6 0 0 0-15.6-2.6" />
+                        <path d="M22 13.9c-2.3-3.1-5.6-5-9.1-5-3.6 0-6.9 1.9-9.2 5" />
+                        <path d="M12 2v20" />
+                    </svg>
+                    <h3 class="font-medium text-lg">Personalized Security Score</h3>
+                </div>
+                <div id="security-score-container" class="flex flex-col gap-2 text-sm">
+                    <p>Answer a few questions for a basic security assessment.</p>
+                    <button onclick="startSecurityScan()"
+                        class="py-2 px-4 bg-gray-700 text-white rounded-md transition-colors duration-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                        Start Scan
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mock Authentication -->
+            <div class="text-sm mt-4 text-center text-gray-500">
+                <p>Authenticated as: <span id="user-id">Loading...</span></p>
+                <p>App ID: <span id="app-id">Loading...</span></p>
+            </div>
+        </div>
+
+        <!-- Main Chat Interface -->
+        <div class="flex-1 flex flex-col p-4 card">
+            <!-- Header -->
+            <header class="flex items-center gap-4 text-white section-header pb-4 mb-4">
+                <div class="w-12 h-12 flex items-center justify-center rounded-full bg-yellow-400 text-black">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-bear-dingo">
+                        <path d="M11 20a7 7 0 1 0 0-14H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h7Z" />
+                        <path d="M17 10h1a4 4 0 0 1 0 8h-1" />
+                        <path d="M16 8a4 4 0 0 0-8 0" />
+                        <path d="M19 12h.01" />
+                        <path d="M17 16h.01" />
+                        <path d="M21 16h.01" />
+                        <path d="M21 12h.01" />
+                        <path d="M21 8h.01" />
+                        <path d="M19 8h.01" />
+                        <path d="M19 19h.01" />
+                        <path d="M19 16h.01" />
+                        <path d="M19 12h.01" />
+                        <path d="M20 10h.01" />
+                        <path d="M20 14h.01" />
+                        <path d="M20 18h.01" />
+                        <path d="M18 19h.01" />
+                        <path d="M18 16h.01" />
+                        <path d="M18 12h.01" />
+                        <path d="M18 8h.01" />
+                    </svg>
+                </div>
+                <h1 class="text-3xl font-bold">CyberBear</h1>
+            </header>
+
+            <!-- Chat History -->
+            <div id="chat-history" class="chat-container flex-1 flex flex-col p-4 overflow-y-auto">
+                <div class="ai-bubble chat-bubble self-start">
+                    <p class="font-semibold text-yellow-400 mb-1">CyberBear</p>
+                    <p>Hello! I am CyberBear, your personal AI-powered cybersecurity assistant. I am here to help you with your security questions and keep you informed. How can I assist you today?</p>
+                </div>
+            </div>
+
+            <!-- User Input -->
+            <div class="mt-4 flex gap-4">
+                <input id="user-input" type="text" placeholder="Ask a cybersecurity question..."
+                    class="flex-1 bg-gray-800 text-gray-200 py-3 px-5 rounded-full placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button id="send-button"
+                    class="w-12 h-12 flex items-center justify-center rounded-full bg-blue-600 text-white transition-transform duration-200 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-send">
+                        <path d="m22 2-7 20-4-9-9-4 20-7Z" />
+                        <path d="M9 15 15 9" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modal for educational content -->
+    <div id="modal-backdrop"
+        class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50">
+        <div class="card p-6 w-full max-w-2xl transform transition-transform duration-300 scale-95 opacity-0"
+            id="modal-content">
+            <div class="flex justify-between items-center section-header pb-4 mb-4">
+                <h3 id="modal-title" class="text-xl font-bold"></h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-x">
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div id="modal-body" class="text-sm leading-relaxed overflow-y-auto max-h-[70vh]"></div>
+        </div>
+    </div>
+
+
+    <script>
+        // Use a placeholder for __app_id and __initial_auth_token for local testing.
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const userId = 'user-' + Math.random().toString(36).substring(2, 10);
+        document.getElementById('user-id').textContent = userId;
+        document.getElementById('app-id').textContent = appId;
+
+
+        // Gemini API Configuration
+        const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=";
+        const apiKey = ""; // The Canvas environment provides this key at runtime.
+
+        // Chat UI elements
+        const chatHistory = document.getElementById('chat-history');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+
+        let isFetching = false;
+
+        // Function to create and append a chat bubble
+        const createChatBubble = (text, sender) => {
+            const bubble = document.createElement('div');
+            bubble.classList.add('chat-bubble');
+
+            if (sender === 'user') {
+                bubble.classList.add('user-bubble');
+                bubble.textContent = text;
+            } else {
+                bubble.classList.add('ai-bubble');
+                const senderName = document.createElement('p');
+                senderName.classList.add('font-semibold', 'text-yellow-400', 'mb-1');
+                senderName.textContent = 'CyberBear';
+                bubble.appendChild(senderName);
+                bubble.appendChild(document.createTextNode(text));
+            }
+
+            chatHistory.appendChild(bubble);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        };
+
+        // Loading animation
+        const showLoading = () => {
+            const loadingBubble = document.createElement('div');
+            loadingBubble.classList.add('ai-bubble', 'chat-bubble', 'loading-dots');
+            loadingBubble.id = 'loading-bubble';
+            loadingBubble.innerHTML = '<span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span>';
+            chatHistory.appendChild(loadingBubble);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        };
+
+        const hideLoading = () => {
+            const loadingBubble = document.getElementById('loading-bubble');
+            if (loadingBubble) {
+                loadingBubble.remove();
+            }
+        };
+
+        // Function to send a query to the Gemini API
+        const sendMessage = async () => {
+            if (isFetching) return;
+            const userText = userInput.value.trim();
+            if (!userText) return;
+
+            // Clear input and show user message
+            createChatBubble(userText, 'user');
+            userInput.value = '';
+            isFetching = true;
+            showLoading();
+
+            try {
+                const systemPrompt = "You are CyberBear, a friendly and highly knowledgeable AI cybersecurity expert. Your purpose is to provide helpful, accurate, and easy-to-understand advice on cybersecurity topics. Be concise, informative, and always maintain a positive, approachable tone. If a query is not related to cybersecurity, gently redirect the user back to the main topic.";
+                const payload = {
+                    contents: [{ parts: [{ text: userText }] }],
+                    tools: [{ "google_search": {} }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                };
+
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API response error: ${response.status} ${response.statusText}`);
+                }
+
+                const result = await response.json();
+                const text = result?.candidates?.[0]?.content?.parts?.[0]?.text || "I'm sorry, I couldn't generate a response at this time. Please try again.";
+                hideLoading();
+                createChatBubble(text, 'ai');
+
+            } catch (error) {
+                console.error("Error fetching AI response:", error);
+                hideLoading();
+                createChatBubble("Oops! Something went wrong. Please check your internet connection or try again later.", 'ai');
+            } finally {
+                isFetching = false;
+            }
+        };
+
+        // Event listeners for sending messages
+        sendButton.addEventListener('click', sendMessage);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // --- Additional Hackathon Features ---
+
+        // Proactive Threat Alerts
+        const threatAlerts = document.getElementById('threat-alerts');
+        const alerts = [
+            'Alert: New phishing campaign targeting online banking users. Always check the sender\'s email address!',
+            'Reminder: A zero-day vulnerability was discovered in a popular browser. Update your software immediately.',
+            'Warning: Be cautious of suspicious links in text messages. Never click on links from unknown senders.',
+            'Threat Intel: Ransomware attacks are on the rise. Back up your important data regularly.',
+            'Heads Up: Malicious software disguised as popular apps is being spread on app stores. Download only from official sources.',
+        ];
+
+        let currentAlertIndex = 0;
+        setInterval(() => {
+            threatAlerts.innerHTML = `<p class="transition-opacity duration-500">${alerts[currentAlertIndex]}</p>`;
+            currentAlertIndex = (currentAlertIndex + 1) % alerts.length;
+        }, 8000);
+
+        // Educational Content Library
+        const modalBackdrop = document.getElementById('modal-backdrop');
+        const modalContent = document.getElementById('modal-content');
+        const modalTitle = document.getElementById('modal-title');
+        const modalBody = document.getElementById('modal-body');
+
+        const educationalContent = {
+            phishing: {
+                title: "Phishing: How to Spot a Deceptive Email",
+                body: `<p class="mb-2">Phishing is a type of social engineering where an attacker sends a fraudulent message to trick a person into revealing sensitive information or deploying malicious software. Here's what to look for:</p>
+                        <ul class="list-disc list-inside space-y-1">
+                            <li><strong>Urgent or Threatening Language:</strong> Messages that create a sense of panic, like "Your account will be suspended" or "Immediate action required."</li>
+                            <li><strong>Generic Greetings:</strong> Emails that start with "Dear Customer" instead of your name.</li>
+                            <li><strong>Suspicious Links:</strong> Hover over links to see the real URL. If it doesn't match the company's website, it's a fake.</li>
+                            <li><strong>Spelling and Grammar Errors:</strong> Professional companies rarely send emails with obvious mistakes.</li>
+                            <li><strong>Unusual Sender Address:</strong> The email address looks official but has extra characters or is from a public domain.</li>
+                        </ul>`
+            },
+            malware: {
+                title: "Malware: Types and Prevention",
+                body: `<p class="mb-2">Malware is a blanket term for malicious software designed to cause damage or gain unauthorized access to a computer system. Common types include:</p>
+                        <ul class="list-disc list-inside space-y-1">
+                            <li><strong>Viruses:</strong> Attach to a legitimate program and spread when it is executed.</li>
+                            <li><strong>Ransomware:</strong> Encrypts your files and demands a ransom for their release.</li>
+                            <li><strong>Spyware:</strong> Gathers information about you without your knowledge.</li>
+                            <li><strong>Adware:</strong> Automatically displays or downloads advertisements.</li>
+                        </ul>
+                        <p class="mt-2">To prevent malware, keep your software updated, use a reputable antivirus program, and be cautious when downloading files or clicking links.</p>`
+            },
+            passwords: {
+                title: "Password Hygiene: Creating Strong Passwords",
+                body: `<p class="mb-2">A strong password is your first line of defense. Follow these best practices:</p>
+                        <ul class="list-disc list-inside space-y-1">
+                            <li><strong>Use a Password Manager:</strong> This is the easiest way to generate and store complex, unique passwords.</li>
+                            <li><strong>Make it Long and Complex:</strong> Aim for 12+ characters, including a mix of upper and lowercase letters, numbers, and symbols.</li>
+                            <li><strong>Be Unique:</strong> Never reuse passwords across different accounts.</li>
+                            <li><strong>Enable Two-Factor Authentication (2FA):</strong> This adds an extra layer of security, even if your password is stolen.</li>
+                        </ul>`
+            }
+        };
+
+        const showEducationalContent = (topic) => {
+            const content = educationalContent[topic];
+            if (content) {
+                modalTitle.textContent = content.title;
+                modalBody.innerHTML = content.body;
+                modalBackdrop.classList.remove('hidden');
+                setTimeout(() => {
+                    modalContent.classList.remove('scale-95', 'opacity-0');
+                    modalContent.classList.add('scale-100', 'opacity-100');
+                }, 10);
+            }
+        };
+
+        const closeModal = () => {
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modalBackdrop.classList.add('hidden');
+            }, 300);
+        };
+
+        // Personalized Security Scan
+        let scanStep = 0;
+        const scanQuestions = [
+            "Do you use the same password for multiple websites?",
+            "Do you have Two-Factor Authentication (2FA) enabled on your critical accounts (email, banking)?",
+            "Do you regularly click on links or download attachments from unknown senders?"
+        ];
+
+        const startSecurityScan = () => {
+            scanStep = 0;
+            const userIntro = "Let's start your personalized security scan. I will ask you a few quick questions. Please respond with 'yes' or 'no'.";
+            createChatBubble(userIntro, 'ai');
+            setTimeout(() => {
+                createChatBubble(scanQuestions[scanStep], 'ai');
+            }, 1000);
+        };
+
+        const handleSecurityScanResponse = (response) => {
+            const cleanResponse = response.toLowerCase().trim();
+            const securityScore = getSecurityScore(scanQuestions[scanStep], cleanResponse);
+            scanStep++;
+
+            if (scanStep < scanQuestions.length) {
+                createChatBubble(scanQuestions[scanStep], 'ai');
+            } else {
+                // End of scan
+                const finalScore = calculateFinalScore(securityScore);
+                let message = `Your scan is complete! Based on your answers, your current security posture is ${finalScore}. ${getSecurityAdvice(finalScore)}`;
+                createChatBubble(message, 'ai');
+                scanStep = 0;
+            }
+        };
+
+        const getSecurityScore = (question, answer) => {
+            if (question.includes("same password") && answer === "yes") {
+                return -30;
+            }
+            if (question.includes("Two-Factor Authentication") && answer === "no") {
+                return -30;
+            }
+            if (question.includes("click on links") && answer === "yes") {
+                return -40;
+            }
+            return 0;
+        };
+
+        const calculateFinalScore = (totalScore) => {
+            const initialScore = 100;
+            const finalScore = Math.max(0, initialScore + totalScore);
+            return `${finalScore}/100`;
+        };
+
+        const getSecurityAdvice = (score) => {
+            if (score.startsWith('100')) {
+                return "Excellent! You're following great security practices. Keep up the good work!";
+            } else if (score.startsWith('70')) {
+                return "Good start! You have a solid foundation, but there's room for improvement. Consider using a password manager and enabling 2FA where possible.";
+            } else {
+                return "Your security posture is vulnerable. It's highly recommended you change your habits, such as using unique passwords for every account and being more careful with suspicious links.";
+            }
+        };
+
+        // Intercept user input for the scan feature
+        const originalSendMessage = sendMessage;
+        sendMessage = () => {
+            if (scanStep > 0) {
+                handleSecurityScanResponse(userInput.value);
+                createChatBubble(userInput.value, 'user');
+                userInput.value = '';
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+            } else {
+                originalSendMessage();
+            }
+        };
+
+
+        // Initialize Lucide Icons
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+#container{
+    height: 300px;
+    width: 80%;
+    background-color: rgb(228, 188, 135);
+    margin: 10px auto;
+    border: 2px solid black;
+     display: flex;
+     flex-direction:column-reverse;
+     justify-content: flex-start;
+    flex-wrap: wrap-reverse;
+
+     /* Justify content  */
+     /* justify-content: flex-end; */
+     /* justify-content: center; */
+     /* justify-content: space-between; */
+     /*  justify-content: space-around; */
+
+}
+
+h1{
+    text-align: center;
+}
+ #container div{
+
+    height: 100px;
+    width: 300px;
+    color: white;
+    text-align: center;
+   
+ }
+
+#container{
+    /* flex-wrap: nowrap; */
+  
+
+}
+ /* display : flex */
+ /* flex direction:row / column */ 
+ /* flex direction: row-reverse 
+    flex direction : column-reverse */
+
+
+
+
+
+    /* 
+flex Wrap */
+/* flex-wrap:nowrap 
+
+no elements will be wrap here */
+
+/* flex-wrap:wrap 
+
+ek box ek line main jitne box aa skte hai
+utne aayenge baki next line main
+*/
+
+/* 
+ */

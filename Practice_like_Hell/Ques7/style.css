@@ -1,0 +1,28 @@
+#containerdiv{
+    height: 10px;
+    width: 300px;
+    background-color: #dadada;
+    border-radius: 100px;
+}
+
+#progress{
+    transition: all cubic-bezier(0.19, 1, 0.22, 1)1s;
+    /* it helps to make the movement more smoothly */
+    width: 10%;
+    height: 100%;
+    border-radius: 50px;
+    background-color:rgb(54, 243, 73);
+}
+
+#center{
+    /* opacity: 0%; */
+ position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% ,-50%);
+}
+
+
+h3{
+    opacity: 0;
+}

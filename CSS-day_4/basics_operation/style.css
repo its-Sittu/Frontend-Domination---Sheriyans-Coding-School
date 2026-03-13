@@ -1,0 +1,75 @@
+div{
+    height: 200px;
+    width: 200px;
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
+    background-color: #7fff00;
+   display:inline-block;
+   transition-timing-function:linear;
+
+    /* transition-timing-function:linear; */
+   
+}
+
+
+/* transition that helps to change 
+in any further shape or operton with having some
+time  */
+
+div:hover{
+    border-radius: 50%;
+    background-color: rgb(224, 16, 37);
+    transition: 2s;
+    
+}
+
+div{
+    margin-right: 10px;
+    padding: 3px;
+}
+
+/* opacity Concept  
+helps to low the color quality
+radius 0-1 */
+
+/* div:active{
+   opacity:0.5;
+   transition-duration: 1ms;
+} */
+
+
+/* transition Shorthand 
+where we write all operation in one
+single code */
+div:hover{
+   margin-top: 400px;
+    
+}
+  /* transition-timing-function:linear; 
+     transition-timing-function:ease-in*/
+
+/* Transform concept 
+any direction , in any shape , move from axis translate */
+
+div:hover{
+   transform: rotate(-45deg);
+   /* we also take deg in neg or pos*/
+  /*  transform:translateX(10px); */
+  /* transform:skew(30deg); */
+}
+
+
+/* Box Shadow
+ by using this we make the shadow of any objects*/
+div:hover{
+    box-shadow: 10px 10px 10px black;
+}
+
+/* Background Image helps to add the iamge  into the box
+if in case the image not fit into the box we use
+BG-Size: Content~fit/ Cover~Scale / auto;*/
+div:active{
+     background-image:url(girl.jpg);
+  background-size: contain;
+}

@@ -1,0 +1,135 @@
+*{
+    box-sizing:border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.gallery{
+     border: 2px solid black;
+    display: grid;
+}
+
+.box{
+    border: 2px black solid;
+    padding: 12px;
+}
+
+.box{
+    background-size: cover;
+    background-position: center;
+}
+
+
+body{
+   font-family: 'Times New Roman', Times, serif;
+    font-size:1.2rem ;
+}
+
+.contain{
+    height: 100vh;
+    display: flex;
+    justify-content:space-evenly;
+    align-items: center;
+    gap:20px;
+    background:linear-gradient(to right,#041, #0b33);
+}
+
+.left{
+    flex-basis: 30%;
+
+}
+
+.gallery{
+    flex-basis:50%;
+}
+
+.heading{
+    font-size: 3rem;
+    color: beige;
+    text-shadow:5px 5px 5px  black;
+    text-align: center;
+
+}
+
+.subheading{
+    color:rgb(230, 196, 134);
+    font-style: italic;
+    text-shadow: 0px 2px 2px black;
+    text-align: center;
+    margin-top: 10px;
+}
+
+
+
+.gallery{
+    flex-basis:50%;
+    display: grid;
+    gap: 8px;
+    grid-template-columns:repeat(3, 2fr);
+    grid-auto-rows:200px;
+}
+
+.box{
+    background-size: cover;
+    /* background-position:; */
+    color:wheat;
+    text-shadow: 2px 2px 2px black;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+
+    /* blend mode
+    
+    mix-blend-mode — ek element ka color uske
+     background 
+     ke sath blend karta hai.
+
+    background-blend-mode — multiple background images/colors ke beech 
+    blending karta hai.*/
+
+    background-color: #222;
+    background-blend-mode:hard-light;
+     transition: all 1s ease-in-out;
+}
+
+
+.row-2{
+    /* jab ek se hi class main 2 class bne than its called
+    utility Class 1 */
+    grid-row:span 2;
+}
+
+
+.col-2{
+    /* utility Class 2*/
+    grid-column:span 2;
+}
+
+.box:hover{
+    background-color: #999;
+    background-position:top;
+    box-shadow:0px 0px 5px black ;
+    
+}
+
+/* .box:active{
+   margin-top:50px;
+} */
+ 
+@media screen and (max-width: 1024px) {
+     .contain{
+        flex-direction:column;
+        padding: 10px;
+     }
+     .gallery{
+        width: 100%;
+     }
+     .box{
+        grid-column:span 3;
+        grid-row: span 2;
+     }
+     .heading{
+        background:linear-gradient(to right, blue,white);
+        margin-bottom: 20px;
+     }
+}

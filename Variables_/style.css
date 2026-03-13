@@ -1,0 +1,80 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* global Variable */
+/* multiple variables can define in roots */
+:root{
+    --primary-background-color:#fff;
+    --secondary-text-color:#ddd;
+    --hello-color-color:#333;
+    --BG-color:#111;
+    --default-margin:30px;
+
+}
+
+.contain{
+    min-height: 100vh;
+    padding: 40px;
+    /* --my-var:rgb(225, 14, 144); */
+    --you-var:rgb(10, 10, 10);
+    background-color:var(--BG-color);
+}
+
+h1{
+    text-align: center;
+    color:var(--you-var);
+     background-color:var(--primary-background-color);
+   margin-bottom: 20px;
+     border-radius:15px;
+}
+
+.box{
+    margin-bottom: 10px;
+    padding: 20px;
+    /* background-color: chartreuse; */
+    /* background-color:var(--primary-background-color); */
+    background-color: var(--hello-color-color);
+    border-radius:40px;
+
+}
+
+.box h2{
+     color: var(--primary-background-color);
+    margin-bottom: 20px;
+    background-color:var(--my-var);
+    
+}
+
+
+p{
+    color:var(--secondary-text-color);
+}
+
+h1{
+    background-color:var(--BG-color);
+    color: var(--primary-background-color);
+}
+
+.dark{
+    --primary-background-color:#fff;
+    --secondary-text-color:#ddd;
+    --hello-color-color:#333;
+    --BG-color:#111;
+    padding:var(--default-margin);
+    margin:var(--default-margin);
+}
+
+.box{
+    padding:var(--default-margin);
+    margin:var(--default-margin);
+}
+
+
+.box:hover{
+    transition-duration: 1ms;
+    border-radius:60PX;
+}
