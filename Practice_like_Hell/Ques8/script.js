@@ -54,4 +54,4 @@ input.addEventListener("input", function(){
                       </div>`
 })
   document.querySelector(".people").innerHTML = newuser;
-})
+}) 
